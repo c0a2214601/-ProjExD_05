@@ -69,6 +69,18 @@ def load_sound(file):
     return None
 
 
+def Background():
+    winstyle = 0  # |FULLSCREEN
+    bestdepth = pg.display.mode_ok(SCREENRECT.size, winstyle, 32)
+    screen = pg.display.set_mode(SCREENRECT.size, winstyle, bestdepth)
+    bgdtile = load_image("background.gif")
+    background = pg.Surface(SCREENRECT.size)
+    for x in range(0, SCREENRECT.width, bgdtile.get_width()):
+        background.blit(bgdtile, (x, 0))
+    screen.blit(background, (0, 0))
+    pg.display.flip()
+
+
 # Each type of game object gets an init and an update function.
 # The update function is called once per frame, and it is when each object should
 # change its current position and state.
@@ -395,12 +407,7 @@ def main(winstyle=0):
                 SCORE += 1
                 alien.kill()
             pg.time.wait(1)    
-            bgdtile = load_image("background.gif")
-            background = pg.Surface(SCREENRECT.size)
-            for x in range(0, SCREENRECT.width, bgdtile.get_width()):
-                background.blit(bgdtile, (x, 0))
-            screen.blit(background, (0, 0))
-            pg.display.flip()
+            Background()
 
         # draw the scene
         dirty = all.draw(screen)
